@@ -5,8 +5,9 @@ import { Sheet, SheetTrigger, SheetContent, SheetClose } from "./ui/sheet";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Footer from "./Footer";
 
-export default function MobileNavbar({ user }: MobileNavProps) {
+export default function MobileNavbar({ user }: MobileNavbarProps) {
   const pathname = usePathname();
 
   return (
@@ -75,7 +76,7 @@ export default function MobileNavbar({ user }: MobileNavProps) {
                 USER
               </nav>
             </SheetClose>
-            FOOTER
+            <Footer user={user} type="mobile" />
           </div>
         </SheetContent>
       </Sheet>
