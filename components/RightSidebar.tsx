@@ -1,12 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import BankCard from "./BankCard";
+import Category from "./Category";
+import { countTransactionCategories } from "@/lib/utils";
 
 export default function RightSidebar({
   user,
   transactions,
   banks,
 }: RightSidebarProps) {
+  const categories: CategoryCount[] = countTransactionCategories(transactions);
+  
   return (
     <aside className="right-sidebar">
       <section className="flex flex-col pb-8">
@@ -14,12 +18,12 @@ export default function RightSidebar({
         <div className="profile">
           <div className="profile-img">
             <span className="text-5xl font-bold text-blue-500">
-              {user.name[0]}
+              {user.firstName[0]}
             </span>
           </div>
           <div className="profile-details">
             <h1 className="profile-name">
-              {user.name}
+              {user.firstName} {user.lastName}
             </h1>
             <p className="profile-email">{user.email}</p>
           </div>
@@ -39,7 +43,7 @@ export default function RightSidebar({
               <BankCard
                 key={banks[0].$id}
                 account={banks[0]}
-                userName={user.name}
+                userName={`${user.firstName} ${user.lastName}`}
                 showBalance={false}
               />
             </div>
@@ -48,13 +52,21 @@ export default function RightSidebar({
                 <BankCard
                   key={banks[1].$id}
                   account={banks[1]}
-                  userName={user.name}
+                  userName={`${user.firstName} ${user.lastName}`}
                   showBalance={false}
                 />
               </div>
             )}
           </div>
         )}
+        <div className="mt-10 flex flex-1 flex-col gap-6">
+          <h2 className="header-2">Top Categories</h2>
+          <div className="space-y-5">
+            {categories.map((category, index) => (
+              <Category key={category.name} category={category} />
+            ))}
+          </div>
+        </div>
       </section>
     </aside>
   );
